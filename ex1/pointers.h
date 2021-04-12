@@ -147,14 +147,14 @@ public:
 
 	T *operator->() const
 	{
-		if (_counter->getUse() == 0)
+		if (expired())
 			throw "Pointer is not longer valid.";
 		return _shared->get();
 	}
 
 	const T &operator*() const
 	{
-		if (_counter->getUse() == 0)
+		if (expired())
 			throw "Pointer is not longer valid.";
 		return _shared->get();
 	}
@@ -166,6 +166,10 @@ private:
 			return;
 
 		_counter->decWeak();
+
+		if (_counter->getWeak() == 0 && expired())
+			delete _counter;
+		
 	}
 
 private:
