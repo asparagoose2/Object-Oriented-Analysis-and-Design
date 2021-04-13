@@ -1,14 +1,16 @@
 #include <iostream>
 #include <map>
+#include <cstring>
 #include "employee.h"
 
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    employee ofir("3155",1200000000,47);
+    // employee ofir("3155",1200000000,47);
+    // employee omer("2089", 21, 88);
     // ofir.save();
-    employee omer("2089", 21, 88);
+    // omer.save();
     employee shahar;
     // employee emps[10];
     // for (int i = 0; i < 10; i++)

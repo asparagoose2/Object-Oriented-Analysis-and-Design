@@ -18,7 +18,6 @@ public:
     ~employee() {}
 
     void load(string);
-    void load();
     void save();
 
     void print();

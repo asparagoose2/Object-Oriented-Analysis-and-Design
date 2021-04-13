@@ -13,8 +13,8 @@ template<class K , class V>
 class ChacheMemory
 {
 private:
-    map<K, shared_ptr> _shared;
-    map<V, weak_ptr> _cache;
+    map<K, shared_ptr<V>> _shared;
+    map<K, weak_ptr<V>> _cache;
 public:
     ChacheMemory() {};
     ~ChacheMemory() {};
@@ -26,9 +26,9 @@ public:
 template<class K , class V>
 void ChacheMemory<K,V>::add(const K& key, const V& value) 
 {
-    if(_shared.find(key) == _shared.end)
+    if(_shared.find(key) == _shared.end())
     {
-        _shared[key] = value;
+        _shared[key] = shared_ptr<V>(new V(value));
     } else {
 
         throw DuplicateKeyException();
@@ -39,7 +39,7 @@ void ChacheMemory<K,V>::add(const K& key, const V& value)
 template<class K , class V>
 void ChacheMemory<K,V>::erase(const K& key) 
 {
-    if(_shared.find(key) == _shared.end)
+    if(_shared.find(key) == _shared.end())
     {
         throw ObjectNotExistException();
     } else {
@@ -51,7 +51,7 @@ void ChacheMemory<K,V>::erase(const K& key)
 template<class K , class V>
 shared_ptr<V> ChacheMemory<K,V>::get(const K &key) 
 {
-    if(_cache.end != _cache.find(key))
+    if(_cache.end() != _cache.find(key))
     {
         if (_cache[key].expired())
         {
@@ -64,7 +64,7 @@ shared_ptr<V> ChacheMemory<K,V>::get(const K &key)
 
         if(_shared.end() !=_shared.find(key))
         {
-            cache[key] = weak_ptr<V>(_shared[key]);
+            _cache[key] = weak_ptr<V>(_shared[key]);
 		    return _shared[key];
         } else {
             return nullptr;
