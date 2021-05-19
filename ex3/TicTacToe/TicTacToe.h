@@ -1,8 +1,12 @@
+#ifndef TICTACTOE_H
+#define TICTACTOE_H
 #include "../game.h"
 #include <vector>
 #include <iostream>
-#include "../CLI_utils.h"
+// #include "../CLI_utils.h"
 #include "../GameLogic/ticTacToeLogic.h"
+
+#pragma once
 
 #define BOARD_WIDTH 3
 #define BOARD_HEIGHT 3
@@ -18,7 +22,7 @@ class TicTacToe : public Game
 private:
     int counter;
 public:
-    TicTacToe(DIFFICULTY difficulty ,bool CLI_MODE = true);
+    TicTacToe(DIFFICULTY difficulty ,bool CLI_MODE);
     ~TicTacToe(){};
 
     virtual void draw() = 0;
@@ -26,10 +30,12 @@ public:
     // virtual Point getMove() = 0;
     bool isMoveValid(Point&);
     virtual void makeMove();
-    bool checkWin();
+    bool isWinner(PLAYER);
     virtual bool isGameOver();
     Point MoveToPoint(char);
     static bool validInput(char);
     void PlayerMakeMove();
     virtual void endGame();
 };
+
+#endif

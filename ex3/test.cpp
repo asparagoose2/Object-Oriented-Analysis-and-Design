@@ -1,9 +1,14 @@
 #include "TicTacToe/TicTacToe_CLI.h"
+#include "gameController.h"
+
+using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    TicTacToe_CLI b;
-    b.startGame();
+    gameController g(new TicTacToe_CLI(EASY,true));
+    g.Play();
+    // TicTacToe_CLI b;
+    // b.startGame();
     // b.draw();
     // b.makeMove(1,1,PLAYER_ONE);
     // b.makeMove(1,2,PLAYER_ONE);

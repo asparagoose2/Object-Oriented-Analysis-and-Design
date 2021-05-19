@@ -1,6 +1,8 @@
-#include "board.h"
+#ifndef GAMEUI_H
+#define GAMEUI_H
 #include <string>
 #include <iostream>
+#pragma once
 
 using namespace std;
 
@@ -37,10 +39,12 @@ public:
     GUI(){};
     ~GUI(){};
 
-    virtual void drawwMenu(string items[]);
-    virtual char getSelection(bool(*validSelection)(char));
-    virtual void printInvalidInput();   
-    virtual void youLose();
-    virtual void youWin();
-    virtual void itsATie();
+    virtual void drawwMenu(string items[]){};
+    virtual char getSelection(bool(*validSelection)(char)){return 'c';};
+    virtual void printInvalidInput(){};   
+    virtual void youLose(){};
+    virtual void youWin(){};
+    virtual void itsATie(){};
 };
+
+#endif

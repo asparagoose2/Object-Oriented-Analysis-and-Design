@@ -1,4 +1,8 @@
+#ifndef GAMECONTROLLER_H
+#define GAMECONTROLLER_H
 #include "game.h"
+#pragma once
+
 
 class gameController
 {
@@ -11,3 +15,4 @@ public:
     void Play();
 };
 
+#endif

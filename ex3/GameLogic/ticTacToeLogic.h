@@ -1,4 +1,11 @@
+#ifndef TICTACTOELOGIC_H
+#define TICTACTOELOGIC_H
 #include "gameLogic.h"
+#include "../TicTacToe/TicTacToe.h"
+#include <stdlib.h>
+#include <time.h> 
+
+using namespace std;
 
 class ticTacToeLogicEasy : public gameLogic 
 {
@@ -18,3 +25,4 @@ public:
 
     virtual void makeMove(vector<vector<char>>&);
 };
+#endif

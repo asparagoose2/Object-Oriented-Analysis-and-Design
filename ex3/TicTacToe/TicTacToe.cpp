@@ -24,7 +24,7 @@ TicTacToe::TicTacToe(DIFFICULTY difficulty ,bool CLI_MODE = true) : Game(CLI_MOD
 
 bool TicTacToe::isMoveValid(Point& move)
 {
-    return (board[move.x][move.y] == EMPTY);
+    return (board[move.y][move.x] == EMPTY);
 }
 Point TicTacToe::MoveToPoint(char move_char)
 {
@@ -84,21 +84,22 @@ void TicTacToe::makeMove()
         logic->makeMove(board);
         currentPlayer = PLAYER_ONE;
     }
+    counter++;
 }
 void TicTacToe::PlayerMakeMove()
 {
     Point move = MoveToPoint(UI->getSelection(validInput));
 
-    while(board[move.x][move.y] != EMPTY)
+    while(board[move.y][move.x] != EMPTY)
     {
         UI->printInvalidInput();
         move = MoveToPoint(UI->getSelection(validInput));
     }
 
-    board[move.x][move.y] = (currentPlayer == PLAYER_ONE? X : O);
+    board[move.y][move.x] =  X;
 }
 
-bool TicTacToe::checkWin()
+bool TicTacToe::isWinner(PLAYER player)
 {
     if (board[0][0] == board[0][1] && board[0][1] == board[0][2]) //first row
         return true;
@@ -132,8 +133,10 @@ bool TicTacToe::checkWin()
 
 bool TicTacToe::validInput(char c)
 {
+    cout << "\nvalidatin " << c << " C-'0' is " << (c-'0');
     if(c-'0' > 0 && c-'0'<= 9)
         return true;
+    cout << "... false!\n";
     return false;
 }
 
@@ -141,12 +144,46 @@ bool TicTacToe::isGameOver()
 {
     if(counter > 8)
         return true;
+
+    if (board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][2] != EMPTY) //first row
+        return true;
+
+    else if (board[1][0] == board[1][1] && board[1][1] == board[1][2] && board[1][2] != EMPTY) //second row
+        return true;
+
+    else if (board[2][0] == board[2][1] && board[2][1] == board[2][2] && board[2][2] != EMPTY) // third row
+        return true;
+
+    else if (board[0][0] == board[1][0] && board[1][0] == board[2][0] && board[2][0] != EMPTY) // first col
+        return true;
+
+    else if (board[0][1] == board[1][1] && board[1][1] == board[2][1] && board[2][1] != EMPTY) // second col
+        return true;
+
+    else if (board[0][2] == board[1][2] && board[1][2] == board[2][2] && board[2][2] != EMPTY) //third col
+        return true;
+
+    else if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[2][2] != EMPTY) // diagonal
+        return true;
+
+    else if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[2][0] != EMPTY) // diagonal
+        return true;
     
-    for (size_t i = 0; i < 3; i++)
+    
+    return false;
+}
+
+void TicTacToe::endGame()
+{
+    if (counter > 8)
     {
-        /* code */
+        UI->itsATie();
+    }
+    else if(PLAYER_ONE != currentPlayer) {
+        UI->youWin();
+    }
+    else {
+        UI->youLose();
     }
     
-
-    return false;
 }

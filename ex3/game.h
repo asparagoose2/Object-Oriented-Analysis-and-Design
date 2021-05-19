@@ -1,10 +1,14 @@
+#ifndef GAME_H
+#define GAME_H
 #include <iostream>
 #include <string>
 #include <vector>
 #include "point.h"
-#include "CLI_utils.h"
-#include "gameUI.h"
-#include "gameLogic.h"
+// #include "CLI_utils.h"
+#include "gameUI/gameUI.h"
+#include "GameLogic/gameLogic.h"
+
+#pragma once
 
 enum PLAYER {PLAYER_ONE, PLAYER_TWO};
 
@@ -44,3 +48,5 @@ public:
     GameController(Game* _game);
     ~GameController();
 };
+
+#endif

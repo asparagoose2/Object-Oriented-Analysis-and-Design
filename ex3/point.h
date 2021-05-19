@@ -1,3 +1,7 @@
+#ifndef POINT_H
+#define POINT_H
+#pragma once
+
 class Point
 {
 public:
@@ -8,3 +12,4 @@ public:
     ~Point() {};
 };
 
+#endif
