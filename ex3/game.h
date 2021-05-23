@@ -24,7 +24,7 @@ protected:
     IGameUI *UI;
     
 public:
-    Game(bool CLI_MODE = true) : currentPlayer(PLAYER_ONE) {if(CLI_MODE) UI = new CLI; else UI = new GUI;};
+    Game(IGameUI* _UI) : currentPlayer(PLAYER_ONE), UI(_UI) {};
     ~Game(){};
 
     virtual void draw() = 0;
@@ -35,6 +35,7 @@ public:
     virtual void makeMove() = 0;
     virtual bool isGameOver() = 0;
     virtual void endGame() = 0;
+    virtual void reset() = 0;
 };
 
 

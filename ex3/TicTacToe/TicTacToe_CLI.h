@@ -6,7 +6,7 @@
 class TicTacToe_CLI : public TicTacToe
 {
 public:
-    TicTacToe_CLI(DIFFICULTY difficulty ,bool CLI_MODE = true) : TicTacToe(difficulty,CLI_MODE) {};
+    TicTacToe_CLI(DIFFICULTY difficulty ,IGameUI* _UI) : TicTacToe(difficulty,_UI) {};
     ~TicTacToe_CLI(){};
 
     void draw();

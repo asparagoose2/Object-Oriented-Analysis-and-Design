@@ -22,20 +22,21 @@ class TicTacToe : public Game
 private:
     int counter;
 public:
-    TicTacToe(DIFFICULTY difficulty ,bool CLI_MODE);
-    ~TicTacToe(){};
+    TicTacToe(DIFFICULTY difficulty ,IGameUI* _UI);
+    ~TicTacToe();
 
     virtual void draw() = 0;
     // virtual void startGame();
     // virtual Point getMove() = 0;
     bool isMoveValid(Point&);
     virtual void makeMove();
-    bool isWinner(PLAYER);
+    bool isThereWinner();
     virtual bool isGameOver();
     Point MoveToPoint(char);
     static bool validInput(char);
     void PlayerMakeMove();
     virtual void endGame();
+    virtual void reset();
 };
 
 #endif

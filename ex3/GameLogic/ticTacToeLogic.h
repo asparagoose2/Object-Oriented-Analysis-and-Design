@@ -18,11 +18,17 @@ public:
 };
 class ticTacToeLogicMedium : public gameLogic 
 {
+private:
+    vector<Point> bestMove = {Point(1,1)};
+    vector<Point> goodMoves = {Point(0,0),Point(2,2),Point(2,0),Point(0,2)};
+    vector<Point> worstMoves = {Point(1,0),Point(0,1),Point(1,2),Point(2,1)};
 
 public:
-    ticTacToeLogicMedium(){};
-    ~ticTacToeLogicMedium(){};
+    ticTacToeLogicMedium() {};
+    ~ticTacToeLogicMedium() {};
 
     virtual void makeMove(vector<vector<char>>&);
+    int evaluate(vector<vector<char>> &b);
+    virtual void reset();
 };
 #endif

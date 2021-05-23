@@ -2,6 +2,8 @@
 #define GAMEUI_H
 #include <string>
 #include <iostream>
+#include <vector>
+#include <math.h>
 #pragma once
 
 using namespace std;
@@ -17,6 +19,7 @@ public:
     virtual void youLose() = 0;
     virtual void youWin() = 0;
     virtual void itsATie() = 0;
+    virtual void draw(vector<vector<char>>& boad, int cellMargin, char(*toDraw)(char)) = 0;
 };
 
 class CLI : public IGameUI
@@ -31,6 +34,8 @@ public:
     virtual void youLose();
     virtual void youWin();
     virtual void itsATie();
+    virtual void draw(vector<vector<char>>& boad, int cellMargin,char(*toDraw)(char));
+
 };
 
 class GUI : public IGameUI
@@ -45,6 +50,7 @@ public:
     virtual void youLose(){};
     virtual void youWin(){};
     virtual void itsATie(){};
+    virtual void draw(vector<vector<char>>& boad, int cellMargin,char(*toDraw)(char)) {};
 };
 
 #endif

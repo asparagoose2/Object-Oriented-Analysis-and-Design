@@ -1,12 +1,12 @@
 #include "TicTacToe.h"
 
-TicTacToe::TicTacToe(DIFFICULTY difficulty ,bool CLI_MODE = true) : Game(CLI_MODE) , counter(0)
+TicTacToe::TicTacToe(DIFFICULTY difficulty ,IGameUI* _UI) : Game(_UI) , counter(0)
 {
-    board.resize(BOARD_HEIGHT);
-    for (size_t i = 0; i < BOARD_HEIGHT; i++)
+    board.resize(BOARD_WIDTH);
+    for (size_t i = 0; i < BOARD_WIDTH; i++)
     {
-        board[i].resize(BOARD_WIDTH);
-        for (size_t j = 0; j < BOARD_WIDTH; j++)
+        board[i].resize(BOARD_HEIGHT);
+        for (size_t j = 0; j < BOARD_HEIGHT; j++)
         {
             board[i][j] = EMPTY;   
         }
@@ -20,6 +20,11 @@ TicTacToe::TicTacToe(DIFFICULTY difficulty ,bool CLI_MODE = true) : Game(CLI_MOD
         logic = new ticTacToeLogicMedium;
     }
     
+}
+
+TicTacToe::~TicTacToe()
+{
+    delete logic;
 }
 
 bool TicTacToe::isMoveValid(Point& move)
@@ -99,7 +104,7 @@ void TicTacToe::PlayerMakeMove()
     board[move.y][move.x] =  X;
 }
 
-bool TicTacToe::isWinner(PLAYER player)
+bool TicTacToe::isThereWinner()
 {
     if (board[0][0] == board[0][1] && board[0][1] == board[0][2]) //first row
         return true;
@@ -125,18 +130,13 @@ bool TicTacToe::isWinner(PLAYER player)
     else if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) // diagonal
         return true;
 
-    else if(counter > 8)
-        return true;
-
     return false;
 }
 
 bool TicTacToe::validInput(char c)
 {
-    cout << "\nvalidatin " << c << " C-'0' is " << (c-'0');
     if(c-'0' > 0 && c-'0'<= 9)
         return true;
-    cout << "... false!\n";
     return false;
 }
 
@@ -175,7 +175,7 @@ bool TicTacToe::isGameOver()
 
 void TicTacToe::endGame()
 {
-    if (counter > 8)
+    if (counter > 8 && !isThereWinner())
     {
         UI->itsATie();
     }
@@ -186,4 +186,16 @@ void TicTacToe::endGame()
         UI->youLose();
     }
     
+}
+
+void TicTacToe::reset()
+{
+    for(vector<vector<char>>::iterator i = board.begin(); i != board.end(); i++)
+    {
+        std::fill(i->begin(), i->end(), 0);
+    }
+
+    counter = 0;
+    currentPlayer = PLAYER_ONE;
+    logic->reset();
 }

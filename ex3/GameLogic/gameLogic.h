@@ -15,6 +15,7 @@ public:
     ~gameLogic(){};
 
     virtual void makeMove(std::vector<std::vector<char>>&) = 0;
+    virtual void reset() {};
 };
 
 #endif
