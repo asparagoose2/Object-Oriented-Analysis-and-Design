@@ -1,8 +1,28 @@
 #include "gameUI.h"
 
-void CLI::drawwMenu(string items[])
+void CLI::drawMenu(string title, vector<string> &items, bool clearScreen)
 {
-    std::cout << "menu\n";
+    if (clearScreen)
+    {
+        system("cls");
+    }
+    for (size_t i = 0; i < title.size() + 8; i++)
+    {
+        cout << '*';
+    }
+    cout << endl;
+    std::cout << "*   " << title << "   *" << endl;
+    for (size_t i = 0; i < title.size() + 8; i++)
+    {
+        cout << '*';
+    }
+
+    cout << endl;
+
+    for (std::vector<std::string>::iterator it = items.begin(); it != items.end(); it++)
+    {
+        std::cout << (std::distance(items.begin(), it) + 1) << ")  " << *it << endl;
+    }
 }
 char CLI::getSelection(bool (*validSelection)(char))
 {
@@ -41,8 +61,13 @@ void CLI::itsATie()
               << "*****************" << endl;
 }
 
-void CLI::draw(vector<vector<char>> &board, int cellMargin, char(*toDraw)(char))
+void CLI::drawBoard(vector<vector<char>> &board, int cellMargin, char (*toDraw)(char), bool clearScreen)
 {
+    if (clearScreen)
+    {
+        system("cls");
+    }
+
     int rowLength = (board.size() * (cellMargin * 2 + 1)) + (board.size() + 1);
 
     int x = 0, y = 0;
@@ -77,7 +102,7 @@ void CLI::draw(vector<vector<char>> &board, int cellMargin, char(*toDraw)(char))
             {
                 std::cout << ' ';
             }
-            std::cout << toDraw(board[x++][y]);
+            std::cout << toDraw(board[y][x++]);
             for (size_t j = 0; j < cellMargin; j++)
             {
                 std::cout << ' ';
@@ -115,7 +140,9 @@ void CLI::draw(vector<vector<char>> &board, int cellMargin, char(*toDraw)(char))
             std::cout << char(196);
         }
     }
+}
 
-    // cout << ;
-    // cout << "     |     |     " << endl;
+void CLI::printMessage(string str)
+{
+    cout << str;
 }

@@ -1,2 +1,4 @@
 *.exe
 .vscode/
+*.rar
+not in use/

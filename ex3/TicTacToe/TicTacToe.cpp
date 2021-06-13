@@ -1,6 +1,9 @@
 #include "TicTacToe.h"
 
-TicTacToe::TicTacToe(DIFFICULTY difficulty ,IGameUI* _UI) : Game(_UI) , counter(0)
+string Game::name = "TicTacToe";
+DIFFICULTY Game::avaliableDifficulties[NUM_OF_DIFFICULTIES] = {EASY, MEDIUM};
+
+TicTacToe::TicTacToe(DIFFICULTY difficulty, IGameUI *_UI) : Game(_UI), counter(0)
 {
     board.resize(BOARD_WIDTH);
     for (size_t i = 0; i < BOARD_WIDTH; i++)
@@ -8,7 +11,7 @@ TicTacToe::TicTacToe(DIFFICULTY difficulty ,IGameUI* _UI) : Game(_UI) , counter(
         board[i].resize(BOARD_HEIGHT);
         for (size_t j = 0; j < BOARD_HEIGHT; j++)
         {
-            board[i][j] = EMPTY;   
+            board[i][j] = EMPTY;
         }
     }
     if (EASY == difficulty)
@@ -19,7 +22,6 @@ TicTacToe::TicTacToe(DIFFICULTY difficulty ,IGameUI* _UI) : Game(_UI) , counter(
     {
         logic = new ticTacToeLogicMedium;
     }
-    
 }
 
 TicTacToe::~TicTacToe()
@@ -27,65 +29,63 @@ TicTacToe::~TicTacToe()
     delete logic;
 }
 
-bool TicTacToe::isMoveValid(Point& move)
-{
-    return (board[move.y][move.x] == EMPTY);
-}
 Point TicTacToe::MoveToPoint(char move_char)
 {
-   Point move; 
-   switch (move_char)
-   {
-   case '1':
-       move.x = 0;
-       move.y = 0;
-       break;
-   case '2':
-       move.x = 1;
-       move.y = 0;
-       break;
-   case '3':
-       move.x = 2;
-       move.y = 0;
-       break;
-   case '4':
-       move.x = 0;
-       move.y = 1;
-       break;
-   case '5':
-       move.x = 1;
-       move.y = 1;
-       break;
-   case '6':
-       move.x = 2;
-       move.y = 1;
-       break;
-   case '7':
-       move.x = 0;
-       move.y = 2;
-       break;
-   case '8':
-       move.x = 1;
-       move.y = 2;
-       break;
-   case '9':
-       move.x = 2;
-       move.y = 2;
-       break;
-   
-   default:
-       break;
-   }
-   return move;
+    Point move;
+    switch (move_char)
+    {
+    case '1':
+        move.x = 0;
+        move.y = 0;
+        break;
+    case '2':
+        move.x = 1;
+        move.y = 0;
+        break;
+    case '3':
+        move.x = 2;
+        move.y = 0;
+        break;
+    case '4':
+        move.x = 0;
+        move.y = 1;
+        break;
+    case '5':
+        move.x = 1;
+        move.y = 1;
+        break;
+    case '6':
+        move.x = 2;
+        move.y = 1;
+        break;
+    case '7':
+        move.x = 0;
+        move.y = 2;
+        break;
+    case '8':
+        move.x = 1;
+        move.y = 2;
+        break;
+    case '9':
+        move.x = 2;
+        move.y = 2;
+        break;
+
+    default:
+        break;
+    }
+    return move;
 }
 
 void TicTacToe::makeMove()
 {
-    if(currentPlayer == PLAYER_ONE){
+    if (currentPlayer == PLAYER_ONE)
+    {
         PlayerMakeMove();
         currentPlayer = PLAYER_TWO;
-    } 
-    else {
+    }
+    else
+    {
         logic->makeMove(board);
         currentPlayer = PLAYER_ONE;
     }
@@ -95,13 +95,13 @@ void TicTacToe::PlayerMakeMove()
 {
     Point move = MoveToPoint(UI->getSelection(validInput));
 
-    while(board[move.y][move.x] != EMPTY)
+    while (board[move.y][move.x] != EMPTY)
     {
         UI->printInvalidInput();
         move = MoveToPoint(UI->getSelection(validInput));
     }
 
-    board[move.y][move.x] =  X;
+    board[move.y][move.x] = X;
 }
 
 bool TicTacToe::isThereWinner()
@@ -135,14 +135,14 @@ bool TicTacToe::isThereWinner()
 
 bool TicTacToe::validInput(char c)
 {
-    if(c-'0' > 0 && c-'0'<= 9)
+    if (c - '0' > 0 && c - '0' <= 9)
         return true;
     return false;
 }
 
 bool TicTacToe::isGameOver()
 {
-    if(counter > 8)
+    if (counter > 8)
         return true;
 
     if (board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][2] != EMPTY) //first row
@@ -168,8 +168,7 @@ bool TicTacToe::isGameOver()
 
     else if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[2][0] != EMPTY) // diagonal
         return true;
-    
-    
+
     return false;
 }
 
@@ -179,18 +178,19 @@ void TicTacToe::endGame()
     {
         UI->itsATie();
     }
-    else if(PLAYER_ONE != currentPlayer) {
+    else if (PLAYER_ONE != currentPlayer)
+    {
         UI->youWin();
     }
-    else {
+    else
+    {
         UI->youLose();
     }
-    
 }
 
 void TicTacToe::reset()
 {
-    for(vector<vector<char>>::iterator i = board.begin(); i != board.end(); i++)
+    for (vector<vector<char>>::iterator i = board.begin(); i != board.end(); i++)
     {
         std::fill(i->begin(), i->end(), 0);
     }
@@ -198,4 +198,41 @@ void TicTacToe::reset()
     counter = 0;
     currentPlayer = PLAYER_ONE;
     logic->reset();
+}
+
+void TicTacToe::setDifficulty(DIFFICULTY diif)
+{
+}
+
+char TicTacToe::symboldToPrint(char c)
+{
+    switch (c)
+    {
+    case EMPTY:
+        return ' ';
+    case X:
+        return 'X';
+    case O:
+        return 'O';
+    }
+
+    return ' ';
+}
+
+void TicTacToe::draw()
+{
+    UI->drawBoard(board, 3, symboldToPrint);
+}
+
+void TicTacToe::drawInstractions()
+{
+    vector<string> rules = {"The grid is 3 by 3", "You play first and X is you", "The first player to get 3 marks in a row (up, down, across, or diagonally) is the winner", "Choose a tile to mark your place"};
+    vector<vector<char>> map = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
+    UI->drawMenu("Game rules", rules, true);
+    UI->printMessage("\n");
+    UI->drawBoard(
+        map, 1, [](char c) -> char
+        { return c; },
+        false);
+    UI->printMessage("\nPress any key to continue");
 }

@@ -28,7 +28,6 @@ public:
     ~ticTacToeLogicMedium() {};
 
     virtual void makeMove(vector<vector<char>>&);
-    int evaluate(vector<vector<char>> &b);
     virtual void reset();
 };
 #endif
